@@ -27,7 +27,7 @@ export default function HomePage() {
     <Container size="xl" p="lg">
       <Stack align="center" gap="lg">
         <Stack align="center" gap="0">
-          <Title order={1}>Badminton Schedule for BKBC</Title>
+          <Title order={1}>BKBC Schedule</Title>
           <Text>
             14 Woodward Ave, Ridgewood, NY 11385{" "}
             <Link href="https://nybcreservation.as.me/">Reserve Here</Link>

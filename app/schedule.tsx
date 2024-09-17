@@ -17,7 +17,11 @@ export default function Schedule({
   };
 
   return (
-    <Flex gap="sm">
+    <Flex
+      gap="sm"
+      direction={{ base: "column", sm: "row" }}
+      align={{ base: "center", sm: "flex-start" }}
+    >
       <Stack align="center">
         <DayPilotNavigator onTimeRangeSelected={handleTimeRangeSelected} />
         <Group gap="sm">
@@ -37,13 +41,18 @@ export default function Schedule({
           startDate={startDate}
           events={events}
           heightSpec="Full"
-          viewType="Week"
+          viewType={window.innerWidth > 768 ? "Week" : "Week"}
           headerDateFormat="ddd M/d"
           timeRangeSelectedHandling="Disabled"
           durationBarVisible={false}
           cellDuration={15}
           cellHeight={15}
           dayBeginsHour={9}
+          eventMoveHandling="Disabled"
+          eventResizeHandling="Disabled"
+          eventClickHandling="Disabled"
+          eventHoverHandling="Disabled"
+          hourWidth={window.innerWidth > 768 ? 60 : 40}
         />
       </Box>
     </Flex>
