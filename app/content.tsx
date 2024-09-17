@@ -1,27 +1,11 @@
 "use client";
 
-import {
-  DayPilotCalendar,
-  DayPilotNavigator,
-} from "@daypilot/daypilot-lite-react";
-import {
-  Box,
-  Center,
-  Container,
-  LoadingOverlay,
-  Table,
-  TableTbody,
-  TableTd,
-  TableTh,
-  TableThead,
-  TableTr,
-} from "@mantine/core";
+import { Box, LoadingOverlay } from "@mantine/core";
 import { useState } from "react";
-import { WeekView } from "react-weekview";
 import useSWR from "swr";
 import Schedule from "./schedule";
 import { DayPilot } from "daypilot-pro-react";
-import format from "date-fns/format";
+import { format } from "date-fns";
 
 const removeTimeZone = (dateTimeString: string) => {
   const toks = dateTimeString.split("-");
