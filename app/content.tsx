@@ -5,7 +5,7 @@ import { useState } from "react";
 import useSWR from "swr";
 import Schedule from "./schedule";
 import { DayPilot } from "daypilot-pro-react";
-import { format } from "date-fns";
+import { format, startOfWeek } from "date-fns";
 
 const removeTimeZone = (dateTimeString: string) => {
   const toks = dateTimeString.split("-");
@@ -61,12 +61,13 @@ const fetcher = async (url: string) => {
 
 export default function Content() {
   const [startDate, setStartDate] = useState(DayPilot.Date.today());
-  let queryDate;
-  const now = new Date().getTime();
-  if (startDate.firstDayOfWeek().getTime() < now) {
-    queryDate = new Date().toISOString().split("T")[0];
-  } else {
-    queryDate = startDate.firstDayOfWeek().toString().split("T")[0];
+  let queryDate = format(
+    startOfWeek(startDate.toDate(), { weekStartsOn: 0 }),
+    "yyyy-MM-dd"
+  );
+  const now = new Date().toISOString().split("T")[0];
+  if (queryDate < now) {
+    queryDate = now;
   }
   const { data, error, isLoading } = useSWR(
     `/api/schedule?startDate=${queryDate}`,
