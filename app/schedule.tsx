@@ -23,7 +23,10 @@ export default function Schedule({
       align={{ base: "center", sm: "flex-start" }}
     >
       <Stack align="center">
-        <DayPilotNavigator onTimeRangeSelected={handleTimeRangeSelected} />
+        <DayPilotNavigator
+          onTimeRangeSelected={handleTimeRangeSelected}
+          weekStarts={1}
+        />
         <Group gap="sm">
           <Box
             w={20}
@@ -53,6 +56,7 @@ export default function Schedule({
           eventClickHandling="Disabled"
           eventHoverHandling="Disabled"
           hourWidth={window.innerWidth > 768 ? 60 : 40}
+          weekStarts={1}
         />
       </Box>
     </Flex>
