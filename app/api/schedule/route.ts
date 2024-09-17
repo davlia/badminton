@@ -34,6 +34,7 @@ async function fetchNYBCSchedule({
     timezone
   });
   const url = `https://nybcreservation.as.me/api/scheduling/v1/availability/times?${params.toString()}`;
+  console.log(url);
   const response = await fetch(url);
 
   if (!response.ok) {

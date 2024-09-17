@@ -61,7 +61,13 @@ const fetcher = async (url: string) => {
 
 export default function Content() {
   const [startDate, setStartDate] = useState(DayPilot.Date.today());
-  const queryDate = startDate.firstDayOfWeek().toString().split("T")[0];
+  let queryDate;
+  const now = new Date().getTime();
+  if (startDate.firstDayOfWeek().getTime() < now) {
+    queryDate = startDate.toString().split("T")[0];
+  } else {
+    queryDate = startDate.firstDayOfWeek().toString().split("T")[0];
+  }
   const { data, error, isLoading } = useSWR(
     `/api/schedule?startDate=${queryDate}`,
     fetcher
