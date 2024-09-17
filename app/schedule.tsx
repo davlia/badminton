@@ -38,6 +38,7 @@ export default function Schedule({
           events={events}
           heightSpec="Full"
           viewType="Week"
+          headerDateFormat="ddd M/d"
           timeRangeSelectedHandling="Disabled"
           durationBarVisible={false}
           cellDuration={15}
