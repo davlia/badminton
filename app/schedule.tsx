@@ -1,5 +1,5 @@
 import { DayPilotNavigator, DayPilotCalendar } from "daypilot-pro-react";
-import { Flex, Group } from "@mantine/core";
+import { Box, Flex, Group, Stack, Text } from "@mantine/core";
 import { useState } from "react";
 
 export default function Schedule({
@@ -17,9 +17,22 @@ export default function Schedule({
   };
 
   return (
-    <Flex>
-      <DayPilotNavigator onTimeRangeSelected={handleTimeRangeSelected} />
-      <div style={{ width: "100%" }}>
+    <Flex gap="sm">
+      <Stack align="center">
+        <DayPilotNavigator onTimeRangeSelected={handleTimeRangeSelected} />
+        <Group gap="sm">
+          <Box
+            w={20}
+            h={20}
+            bg="#FFFF00"
+            style={{
+              border: "1px solid black",
+            }}
+          />
+          <Text>= Available</Text>
+        </Group>
+      </Stack>
+      <Box w="100%">
         <DayPilotCalendar
           startDate={startDate}
           events={events}
@@ -31,7 +44,7 @@ export default function Schedule({
           cellHeight={15}
           dayBeginsHour={9}
         />
-      </div>
+      </Box>
     </Flex>
   );
 }

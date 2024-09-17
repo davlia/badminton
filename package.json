@@ -9,11 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@daypilot/daypilot-lite-react": "^3.25.0",
     "@mantine/core": "7.12.2",
     "@mantine/hooks": "7.12.2",
     "date-fns": "^4.0.0",
-    "daypilot-pro-angular": "https://npm.daypilot.org/daypilot-pro-angular/trial/2024.3.6155.tar.gz",
     "daypilot-pro-react": "https://npm.daypilot.org/daypilot-pro-react/trial/2024.3.6155.tar.gz",
     "next": "14.2.4",
     "react": "18.3.1",

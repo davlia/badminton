@@ -21,6 +21,7 @@ import { WeekView } from "react-weekview";
 import useSWR from "swr";
 import Schedule from "./schedule";
 import { DayPilot } from "daypilot-pro-react";
+import format from "date-fns/format";
 
 const removeTimeZone = (dateTimeString: string) => {
   const toks = dateTimeString.split("-");
@@ -29,53 +30,43 @@ const removeTimeZone = (dateTimeString: string) => {
   return toks.join("-");
 };
 
-const timeOnly = (dateTimeString: string) => {
-  // dateTimeString is in the format "2024-09-20T23:00:00-0400"
-  // Convert from 24-hour format to 12-hour format and add AM/PM
-  const toks = removeTimeZone(dateTimeString).split("T");
-  const time = toks[1];
-  const timeOnly = time.split(":");
-  const hour = parseInt(timeOnly[0]);
-  const minute = timeOnly[1];
-  const ampm = hour >= 12 ? "PM" : "AM";
-  const hour12 = hour % 12;
-  if (hour12 === 0) {
-    return `12:${minute}${ampm}`;
-  }
-  return `${hour12}:${minute}${ampm}`;
+const formatTime = (time: number) => {
+  const date = new Date(time);
+  return format(date, "hh:mma");
 };
 
 const combineSchedule = (schedule: any) => {
   // Sort the schedule by time
   const flattenedSchedule = schedule.slice().sort((a: any, b: any) => {
-    return new Date(a.start).getTime() - new Date(b.start).getTime();
+    return a.start - b.start;
   });
   // Merge contiguous times (separated by 30 minutes) into a single event
   for (let i = 0; i < flattenedSchedule.length; i++) {
     const currentEvent = flattenedSchedule[i];
     const nextEvent = flattenedSchedule[i + 1];
-    if (
-      nextEvent &&
-      new Date(currentEvent.end).getTime() + 10000 >=
-        new Date(nextEvent.start).getTime()
-    ) {
+    if (nextEvent && currentEvent.end >= nextEvent.start) {
       currentEvent.end = nextEvent.end;
       flattenedSchedule.splice(i + 1, 1);
       i--;
     }
   }
   for (let i = 0; i < flattenedSchedule.length; i++) {
+    const start = new Date(flattenedSchedule[i].start);
+    const end = new Date(flattenedSchedule[i].end);
+    const startDate = format(start, "yyyy-MM-dd'T'HH:mm:ss");
+    const endDate = format(end, "yyyy-MM-dd'T'HH:mm:ss");
+    const startTime = formatTime(flattenedSchedule[i].start);
+    const endTime = formatTime(flattenedSchedule[i].end);
+    console.log(startDate, endDate, startTime, endTime);
     flattenedSchedule[i] = {
       id: flattenedSchedule[i].start,
-      text: `${timeOnly(flattenedSchedule[i].start)} - ${timeOnly(
-        flattenedSchedule[i].end
-      )}`,
+      text: `${startTime} - ${endTime}`,
       backColor: "yellow",
-      start: removeTimeZone(flattenedSchedule[i].start),
-      end: removeTimeZone(flattenedSchedule[i].end),
+      start: startDate,
+      end: endDate,
     };
   }
-
+  console.log(flattenedSchedule);
   return flattenedSchedule;
 };
 

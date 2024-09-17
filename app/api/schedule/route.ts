@@ -48,11 +48,8 @@ async function fetchNYBCSchedule({
     for (const time of times as any) {
       const duration = appointmentTypes[appointmentTypeId as AppointmentTypeId];
       reformatted.push({
-        start: time.time,
-        end: format(
-          addMinutes(parseISO(time.time), duration),
-          "yyyy-MM-dd'T'HH:mm:ssXXX"
-        ),
+        start: new Date(time.time).getTime(),
+        end: addMinutes(parseISO(time.time), duration).getTime(),
       });
     }
   }
