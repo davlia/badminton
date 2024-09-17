@@ -64,7 +64,7 @@ export default function Content() {
   let queryDate;
   const now = new Date().getTime();
   if (startDate.firstDayOfWeek().getTime() < now) {
-    queryDate = startDate.toString().split("T")[0];
+    queryDate = new Date().toISOString().split("T")[0];
   } else {
     queryDate = startDate.firstDayOfWeek().toString().split("T")[0];
   }
