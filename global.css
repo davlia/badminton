@@ -1,0 +1,22 @@
+@media screen and (max-width: 768px) {
+  div.calendar_default_rowheader_inner {
+    font-size: 12pt;
+  }
+  div.calendar_default_colheader_inner {
+    font-size: 8pt;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  div.calendar_default_rowheader_inner {
+    font-size: 12pt;
+  }
+  div.calendar_default_colheader_inner {
+    font-size: 8pt;
+  }
+  div.calendar_default_event_inner {
+    font-size: 6pt;
+    padding: 0 2px;
+    line-height: 1;
+  }
+}
