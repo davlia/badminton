@@ -9,7 +9,7 @@ export default function Schedule({
 }: {
   events: any;
   startDate: any;
-  setStartDate: (date: string) => void;
+  setStartDate: (date: any) => void;
 }) {
   console.log(startDate);
   const handleTimeRangeSelected = (args: any) => {

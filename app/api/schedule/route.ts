@@ -4,7 +4,9 @@ import { NextRequest, NextResponse } from 'next/server';
 const appointmentTypes = {
   "48094909": 45, // 2 person (45 min)
   "59989840": 30, // 30 min
-}
+} as const;
+
+type AppointmentTypeId = keyof typeof appointmentTypes;
 
 interface ScheduleParams {
   owner: string;
@@ -27,7 +29,7 @@ async function fetchNYBCSchedule({
     owner,
     appointmentTypeId: appointmentTypeId || "",
     calendarId,
-    startDate,
+    startDate: startDate || "",
     maxDays,
     timezone
   });
@@ -43,8 +45,8 @@ async function fetchNYBCSchedule({
 
   const reformatted = [];
   for (const [date, times] of Object.entries(res)) {
-    for (const time of times) {
-      const duration = appointmentTypes[appointmentTypeId];
+    for (const time of times as any) {
+      const duration = appointmentTypes[appointmentTypeId as AppointmentTypeId];
       reformatted.push({
         start: time.time,
         end: format(
@@ -57,17 +59,17 @@ async function fetchNYBCSchedule({
   return reformatted;
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   try {
-    const startDate = request.nextUrl.searchParams.get("startDate");
-    const threeDaysLater = addDays(startDate, 3).toISOString().split("T")[0];
-    console.log(startDate, threeDaysLater);
+    const { searchParams } = new URL(request.url);
+    const startDate = searchParams.get("startDate") || new Date().toISOString().split("T")[0];
+    const threeDaysLater = addDays(new Date(startDate), 3).toISOString().split("T")[0];
     const fetchPromises = Object.entries(appointmentTypes).map(
-      ([appointmentTypeId, duration]) =>
+      ([appointmentTypeId]) =>
         fetchNYBCSchedule({ appointmentTypeId, startDate })
     );
     const fetchPromisesThreeDaysLater = Object.entries(appointmentTypes).map(
-      ([appointmentTypeId, duration]) =>
+      ([appointmentTypeId]) =>
         fetchNYBCSchedule({ appointmentTypeId, startDate: threeDaysLater })
     );
 

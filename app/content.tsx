@@ -5,6 +5,7 @@ import {
   DayPilotNavigator,
 } from "@daypilot/daypilot-lite-react";
 import {
+  Box,
   Center,
   Container,
   LoadingOverlay,
@@ -94,7 +95,7 @@ export default function Content() {
   let combinedSchedule = [];
   if (data) combinedSchedule = combineSchedule(data);
   return (
-    <Container size="xl" p="lg">
+    <Box>
       <LoadingOverlay visible={isLoading} />
       <Schedule
         events={
@@ -103,6 +104,6 @@ export default function Content() {
         startDate={startDate}
         setStartDate={setStartDate}
       />
-    </Container>
+    </Box>
   );
 }
