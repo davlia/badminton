@@ -18,7 +18,7 @@ interface ScheduleParams {
 }
 
 async function fetchNYBCSchedule({
-  owner = '6efeecae',
+  owner = '474f915b',
   appointmentTypeId,
   calendarId = "any",
   startDate,
