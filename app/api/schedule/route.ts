@@ -2,8 +2,8 @@ import { addDays, addMinutes, format, parseISO } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
 
 const appointmentTypes = {
-  "48094909": 45, // 2 person (45 min)
-  "59989840": 30, // 30 min
+  "65420183": 45, // 2 person (45 min)
+  "65420226": 60, // 60 min
 } as const;
 
 type AppointmentTypeId = keyof typeof appointmentTypes;
